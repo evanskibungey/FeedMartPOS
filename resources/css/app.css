@@ -1,3 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-gradient-to-br from-agri-50 via-white to-harvest-50;
+    }
+}
+
+@layer components {
+    /* Custom Card Styles */
+    .card {
+        @apply bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl;
+    }
+    
+    .card-header {
+        @apply bg-gradient-agri text-white px-6 py-4 font-semibold;
+    }
+    
+    .card-body {
+        @apply p-6;
+    }
+    
+    /* Custom Button Styles */
+    .btn-agri {
+        @apply bg-gradient-agri text-white px-6 py-3 rounded-lg font-semibold shadow-agri hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200;
+    }
+    
+    .btn-harvest {
+        @apply bg-gradient-harvest text-white px-6 py-3 rounded-lg font-semibold shadow-harvest hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200;
+    }
+    
+    .btn-earth {
+        @apply bg-gradient-earth text-white px-6 py-3 rounded-lg font-semibold shadow-earth hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200;
+    }
+    
+    /* Navigation Styles */
+    .nav-link {
+        @apply relative px-4 py-2 text-gray-700 font-medium transition-all duration-200 hover:text-agri-600;
+    }
+    
+    .nav-link.active {
+        @apply text-agri-700;
+    }
+    
+    .nav-link.active::after {
+        @apply content-[''] absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-agri;
+    }
+    
+    /* Input Styles */
+    .input-field {
+        @apply w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-agri-500 focus:ring-2 focus:ring-agri-200 transition-all duration-200;
+    }
+    
+    /* Badge Styles */
+    .badge {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    }
+    
+    .badge-success {
+        @apply bg-agri-100 text-agri-800;
+    }
+    
+    .badge-warning {
+        @apply bg-harvest-100 text-harvest-800;
+    }
+    
+    .badge-info {
+        @apply bg-sky-100 text-sky-800;
+    }
+    
+    /* Stat Card */
+    .stat-card {
+        @apply bg-white rounded-xl p-6 shadow-lg border-l-4 transition-all duration-300 hover:shadow-xl hover:scale-105;
+    }
+    
+    .stat-card-agri {
+        @apply border-agri-500;
+    }
+    
+    .stat-card-harvest {
+        @apply border-harvest-500;
+    }
+    
+    .stat-card-earth {
+        @apply border-earth-500;
+    }
+    
+    .stat-card-sky {
+        @apply border-sky-500;
+    }
+}
+
+@layer utilities {
+    /* Custom Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in-up {
+        animation: fadeInUp 0.5s ease-out;
+    }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .animate-slide-in-right {
+        animation: slideInRight 0.5s ease-out;
+    }
+    
+    /* Text Gradient */
+    .text-gradient-agri {
+        @apply bg-gradient-agri bg-clip-text text-transparent;
+    }
+    
+    .text-gradient-harvest {
+        @apply bg-gradient-harvest bg-clip-text text-transparent;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-agri-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-agri-600;
+}
