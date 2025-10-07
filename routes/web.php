@@ -4,6 +4,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PurchaseOrderController;
+use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\POS\POSDashboardController;
 use App\Http\Controllers\POS\POSLoginController;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +60,46 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->name('users.toggle-status');
         Route::post('users/{user}/update-password', [UserManagementController::class, 'updatePassword'])
             ->name('users.update-password');
+
+        // Category Management Routes
+        Route::resource('categories', CategoryController::class);
+        Route::post('categories/{category}/toggle-status', [CategoryController::class, 'toggleStatus'])
+            ->name('categories.toggle-status');
+
+        // Brand Management Routes
+        Route::resource('brands', BrandController::class);
+        Route::post('brands/{brand}/toggle-status', [BrandController::class, 'toggleStatus'])
+            ->name('brands.toggle-status');
+
+        // Supplier Management Routes
+        Route::resource('suppliers', SupplierController::class);
+        Route::post('suppliers/{supplier}/toggle-status', [SupplierController::class, 'toggleStatus'])
+            ->name('suppliers.toggle-status');
+
+        // Product Management Routes
+        Route::resource('products', ProductController::class);
+        Route::post('products/{product}/toggle-status', [ProductController::class, 'toggleStatus'])
+            ->name('products.toggle-status');
+
+        // Purchase Order Routes
+        Route::resource('purchase-orders', PurchaseOrderController::class);
+        Route::get('purchase-orders-drafts', [PurchaseOrderController::class, 'drafts'])->name('purchase-orders.drafts');
+        Route::post('purchase-orders/{purchase_order}/mark-ordered', [PurchaseOrderController::class, 'markAsOrdered'])
+            ->name('purchase-orders.mark-ordered');
+        Route::post('purchase-orders/{purchase_order}/receive', [PurchaseOrderController::class, 'receive'])
+            ->name('purchase-orders.receive');
+        Route::post('purchase-orders/{purchase_order}/cancel', [PurchaseOrderController::class, 'cancel'])
+            ->name('purchase-orders.cancel');
+
+        // Inventory Routes
+        Route::prefix('inventory')->name('inventory.')->group(function () {
+            Route::get('/', [InventoryController::class, 'index'])->name('index');
+            Route::get('/movements', [InventoryController::class, 'movements'])->name('movements');
+            Route::get('/low-stock', [InventoryController::class, 'lowStock'])->name('low-stock');
+            Route::get('/reorder-report', [InventoryController::class, 'reorderReport'])->name('reorder');
+            Route::get('/adjust', [InventoryController::class, 'adjustStock'])->name('adjust');
+            Route::post('/adjust', [InventoryController::class, 'processAdjustment'])->name('adjust.store');
+        });
     });
 });
 

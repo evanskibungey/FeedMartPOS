@@ -15,5 +15,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SuperAdminSeeder::class,
         ]);
+
+        // Seed inventory data
+        $this->call([
+            CategorySeeder::class,
+            BrandSeeder::class,
+            SupplierSeeder::class,
+            ProductSeeder::class, // Added product seeder
+        ]);
     }
 }

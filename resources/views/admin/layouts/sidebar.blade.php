@@ -83,11 +83,6 @@
                 <span x-show="!sidebarCollapsed" 
                       x-transition
                       class="font-semibold whitespace-nowrap flex-1">Users</span>
-                <span x-show="!sidebarCollapsed" 
-                      x-transition
-                      class="ml-auto px-2 py-0.5 text-xs font-bold rounded-full {{ request()->routeIs('admin.users.*') ? 'bg-white/20' : 'bg-harvest-100 text-harvest-700' }}">
-                    {{ \App\Models\User::count() }}
-                </span>
             </a>
 
             <!-- Section Divider -->
@@ -95,15 +90,18 @@
                 <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
                 <span x-show="!sidebarCollapsed" 
                       x-transition
-                      class="text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Management</span>
+                      class="text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Inventory</span>
                 <div x-show="!sidebarCollapsed" 
                      x-transition
                      class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
             </div>
 
             <!-- Products -->
-            <a href="#" 
-               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200 text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700">
+            <a href="{{ route('admin.products.index') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.products.*') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
                 <div class="flex-shrink-0">
                     <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -112,10 +110,133 @@
                 <span x-show="!sidebarCollapsed" 
                       x-transition
                       class="font-semibold whitespace-nowrap">Products</span>
+            </a>
+
+            <!-- Categories -->
+            <a href="{{ route('admin.categories.index') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.categories.*') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                    </svg>
+                </div>
                 <span x-show="!sidebarCollapsed" 
                       x-transition
-                      class="ml-auto px-1.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-700 rounded">Soon</span>
+                      class="font-semibold whitespace-nowrap">Categories</span>
             </a>
+
+            <!-- Brands -->
+            <a href="{{ route('admin.brands.index') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.brands.*') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                </div>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="font-semibold whitespace-nowrap">Brands</span>
+            </a>
+
+            <!-- Inventory Management -->
+            <a href="{{ route('admin.inventory.index') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.inventory.*') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                </div>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="font-semibold whitespace-nowrap">Inventory</span>
+            </a>
+
+            <!-- Section Divider -->
+            <div class="flex items-center space-x-2 px-3 py-3">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Procurement</span>
+                <div x-show="!sidebarCollapsed" 
+                     x-transition
+                     class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
+
+            <!-- Purchase Orders -->
+            <a href="{{ route('admin.purchase-orders.index') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.purchase-orders.index', 'admin.purchase-orders.show', 'admin.purchase-orders.edit', 'admin.purchase-orders.create') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="font-semibold whitespace-nowrap">Purchase Orders</span>
+            </a>
+
+            <!-- Draft Purchase Orders -->
+            <a href="{{ route('admin.purchase-orders.drafts') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.purchase-orders.drafts') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                </div>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="font-semibold whitespace-nowrap flex-1">Draft Orders</span>
+                @php
+                    $draftCount = \App\Models\PurchaseOrder::where('status', 'draft')->count();
+                @endphp
+                @if($draftCount > 0)
+                    <span x-show="!sidebarCollapsed" 
+                          x-transition
+                          class="ml-auto px-2 py-0.5 text-xs font-bold bg-red-500 text-white rounded-full animate-pulse">{{ $draftCount }}</span>
+                @endif
+            </a>
+
+            <!-- Suppliers -->
+            <a href="{{ route('admin.suppliers.index') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.suppliers.*') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                </div>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="font-semibold whitespace-nowrap">Suppliers</span>
+            </a>
+
+            <!-- Section Divider -->
+            <div class="flex items-center space-x-2 px-3 py-3">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Sales</span>
+                <div x-show="!sidebarCollapsed" 
+                     x-transition
+                     class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
 
             <!-- Orders -->
             <a href="#" 
@@ -128,19 +249,9 @@
                 <span x-show="!sidebarCollapsed" 
                       x-transition
                       class="font-semibold whitespace-nowrap">Orders</span>
-            </a>
-
-            <!-- Inventory -->
-            <a href="#" 
-               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200 text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700">
-                <div class="flex-shrink-0">
-                    <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                    </svg>
-                </div>
                 <span x-show="!sidebarCollapsed" 
                       x-transition
-                      class="font-semibold whitespace-nowrap">Inventory</span>
+                      class="ml-auto px-1.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-700 rounded">Soon</span>
             </a>
 
             <!-- Customers -->
@@ -154,6 +265,9 @@
                 <span x-show="!sidebarCollapsed" 
                       x-transition
                       class="font-semibold whitespace-nowrap">Customers</span>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="ml-auto px-1.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-700 rounded">Soon</span>
             </a>
 
             <!-- Reports -->
@@ -167,6 +281,9 @@
                 <span x-show="!sidebarCollapsed" 
                       x-transition
                       class="font-semibold whitespace-nowrap">Reports</span>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="ml-auto px-1.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-700 rounded">Soon</span>
             </a>
 
             <!-- Section Divider -->
@@ -192,6 +309,9 @@
                 <span x-show="!sidebarCollapsed" 
                       x-transition
                       class="font-semibold whitespace-nowrap">Settings</span>
+                <span x-show="!sidebarCollapsed" 
+                      x-transition
+                      class="ml-auto px-1.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-700 rounded">Soon</span>
             </a>
         </nav>
 
