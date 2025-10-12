@@ -5,6 +5,7 @@ namespace App\Http\Controllers\POS;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class POSDashboardController extends Controller
@@ -48,11 +49,14 @@ class POSDashboardController extends Controller
         // Get products
         $products = $query->orderBy('name')->get();
         
-        // Get today's sales stats (placeholder for now)
+        // Get today's sales stats
+        $todaySales = Sale::today()->completed()->get();
         $todayStats = [
-            'sales' => 0,
-            'transactions' => 0,
-            'items_sold' => 0,
+            'sales' => $todaySales->sum('total_amount'),
+            'transactions' => $todaySales->count(),
+            'items_sold' => $todaySales->sum(function ($sale) {
+                return $sale->saleItems->sum('quantity');
+            }),
         ];
         
         return view('pos.dashboard', compact('user', 'products', 'categories', 'categoryId', 'search', 'todayStats'));

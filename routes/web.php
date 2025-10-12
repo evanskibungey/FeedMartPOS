@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PurchaseOrderController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\POS\POSDashboardController;
 use App\Http\Controllers\POS\POSLoginController;
+use App\Http\Controllers\POS\SaleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -121,6 +122,12 @@ Route::prefix('pos')->name('pos.')->group(function () {
     Route::middleware(['auth', 'pos'])->group(function () {
         Route::get('/dashboard', [POSDashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [POSLoginController::class, 'destroy'])->name('logout');
+        
+        // Sale Routes
+        Route::post('/sales', [SaleController::class, 'store'])->name('sales.store');
+        Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+        Route::get('/sales/{sale}', [SaleController::class, 'show'])->name('sales.show');
+        Route::get('/sales/today/stats', [SaleController::class, 'todayStats'])->name('sales.today-stats');
     });
 });
 

@@ -39,6 +39,27 @@ class Product extends Model
         'tax_rate' => 'decimal:2',
     ];
 
+    protected $appends = ['selling_price', 'image_url'];
+
+    /**
+     * Get the selling price (alias for price)
+     */
+    public function getSellingPriceAttribute()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Get the full image URL
+     */
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return null;
+    }
+
     /**
      * Get the category for this product
      */
@@ -79,6 +100,14 @@ class Product extends Model
     public function purchaseOrderItems(): HasMany
     {
         return $this->hasMany(PurchaseOrderItem::class);
+    }
+
+    /**
+     * Get sale items for this product
+     */
+    public function saleItems(): HasMany
+    {
+        return $this->hasMany(SaleItem::class);
     }
 
     /**
