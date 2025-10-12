@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white/90 backdrop-blur-md border-b-2 border-sky-100 shadow-lg sticky top-0 z-50">
+<nav x-data="{ open: false }" class="bg-white/90 backdrop-blur-md border-b-2 border-harvest-100 shadow-lg sticky top-0 z-50">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
@@ -8,15 +8,15 @@
                     <a href="{{ route('pos.dashboard') }}" class="flex items-center space-x-3 transition-transform duration-300 hover:scale-105">
                         <x-application-logo class="block h-12 w-12 transition-transform duration-300 group-hover:rotate-12" />
                         <div class="hidden md:block">
-                            <span class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-sky-600 bg-clip-text text-transparent">FeedMart</span>
-                            <p class="text-xs text-sky-600 -mt-1 font-semibold">Point of Sale</p>
+                            <span class="text-2xl font-bold bg-gradient-harvest bg-clip-text text-transparent">FeedMart</span>
+                            <p class="text-xs text-harvest-600 -mt-1 font-semibold">Point of Sale</p>
                         </div>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-2 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('pos.dashboard')" :active="request()->routeIs('pos.dashboard')" class="nav-link border-sky-500 text-sky-700 hover:text-sky-600 hover:border-sky-300 hover:bg-sky-50/50">
+                    <x-nav-link :href="route('pos.dashboard')" :active="request()->routeIs('pos.dashboard')" class="nav-link border-harvest-500 text-harvest-700 hover:text-harvest-600 hover:border-harvest-300 hover:bg-harvest-50/50">
                         <div class="flex items-center space-x-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -41,15 +41,15 @@
             <!-- Right Side: Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <!-- POS Badge -->
-                <div class="mr-4 px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                <div class="mr-4 px-3 py-1 bg-harvest-100 text-harvest-700 rounded-full text-xs font-bold uppercase tracking-wider">
                     Cashier
                 </div>
 
                 <x-dropdown align="right" width="56">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-4 py-2 border-2 border-sky-200 text-sm leading-4 font-medium rounded-xl text-gray-700 bg-white hover:bg-sky-50 hover:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition-all duration-200 shadow-sm hover:shadow-md">
+                        <button class="inline-flex items-center px-4 py-2 border-2 border-harvest-200 text-sm leading-4 font-medium rounded-xl text-gray-700 bg-white hover:bg-harvest-50 hover:border-harvest-400 focus:outline-none focus:ring-2 focus:ring-harvest-500 focus:ring-offset-2 transition-all duration-200 shadow-sm hover:shadow-md">
                             <div class="flex items-center space-x-3">
-                                <div class="h-8 w-8 rounded-full bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center text-white font-semibold">
+                                <div class="h-8 w-8 rounded-full bg-gradient-harvest flex items-center justify-center text-white font-semibold">
                                     {{ substr(Auth::user()->name, 0, 1) }}
                                 </div>
                                 <div class="text-left">
@@ -64,7 +64,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <div class="px-4 py-3 bg-gradient-to-br from-sky-400 to-sky-600 text-white">
+                        <div class="px-4 py-3 bg-gradient-harvest text-white">
                             <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
                             <p class="text-xs opacity-90">{{ Auth::user()->email ?? Auth::user()->phone }}</p>
                         </div>
@@ -89,7 +89,7 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-lg text-gray-600 hover:text-sky-600 hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-sky-500 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-lg text-gray-600 hover:text-harvest-600 hover:bg-harvest-50 focus:outline-none focus:ring-2 focus:ring-harvest-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -100,9 +100,9 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-sky-100">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-harvest-100">
         <div class="pt-2 pb-3 space-y-1 bg-white">
-            <x-responsive-nav-link :href="route('pos.dashboard')" :active="request()->routeIs('pos.dashboard')" class="border-sky-500 text-sky-700 hover:bg-sky-50">
+            <x-responsive-nav-link :href="route('pos.dashboard')" :active="request()->routeIs('pos.dashboard')" class="border-harvest-500 text-harvest-700 hover:bg-harvest-50">
                 <div class="flex items-center space-x-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -124,9 +124,9 @@
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-sky-200 bg-sky-50">
+        <div class="pt-4 pb-1 border-t border-harvest-200 bg-harvest-50">
             <div class="px-4 flex items-center space-x-3">
-                <div class="h-10 w-10 rounded-full bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center text-white font-semibold text-lg">
+                <div class="h-10 w-10 rounded-full bg-gradient-harvest flex items-center justify-center text-white font-semibold text-lg">
                     {{ substr(Auth::user()->name, 0, 1) }}
                 </div>
                 <div>

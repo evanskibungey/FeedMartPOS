@@ -17,7 +17,7 @@
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col lg:flex-row">
             <!-- Left Side - Branding & Info -->
-            <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-sky-400 to-sky-600 p-12 flex-col justify-between relative overflow-hidden">
+            <div class="hidden lg:flex lg:w-1/2 bg-gradient-harvest p-12 flex-col justify-between relative overflow-hidden">
                 <!-- Decorative Background Elements -->
                 <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-48 -mt-48"></div>
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full -ml-48 -mb-48"></div>
@@ -27,7 +27,7 @@
                         <x-application-logo class="w-16 h-16" />
                         <div>
                             <h1 class="text-3xl font-bold text-white">FeedMart</h1>
-                            <p class="text-sky-100 text-sm">Point of Sale Terminal</p>
+                            <p class="text-harvest-100 text-sm">Point of Sale Terminal</p>
                         </div>
                     </div>
                     
@@ -35,7 +35,7 @@
                         <h2 class="text-4xl font-bold leading-tight">
                             Fast & Efficient<br/>Sales Processing
                         </h2>
-                        <p class="text-lg text-sky-100">
+                        <p class="text-lg text-harvest-100">
                             Process customer transactions quickly and efficiently with our intuitive point of sale system designed for agricultural feed stores.
                         </p>
                     </div>
@@ -71,13 +71,13 @@
             </div>
 
             <!-- Right Side - Form -->
-            <div class="flex-1 flex flex-col justify-center items-center p-6 sm:p-12 bg-gradient-to-br from-sky-50 via-white to-agri-50">
+            <div class="flex-1 flex flex-col justify-center items-center p-6 sm:p-12 bg-gradient-to-br from-harvest-50 via-white to-agri-50">
                 <!-- Mobile Logo -->
                 <div class="lg:hidden mb-8">
                     <div class="flex flex-col items-center space-y-2">
                         <x-application-logo class="w-20 h-20" />
                         <div class="text-center">
-                            <h1 class="text-2xl font-bold bg-gradient-to-br from-sky-400 to-sky-600 bg-clip-text text-transparent">FeedMart</h1>
+                            <h1 class="text-2xl font-bold bg-gradient-harvest bg-clip-text text-transparent">FeedMart</h1>
                             <p class="text-sm text-gray-600">POS Terminal</p>
                         </div>
                     </div>
@@ -85,10 +85,10 @@
 
                 <!-- Form Card -->
                 <div class="w-full max-w-md">
-                    <div class="bg-white shadow-2xl rounded-2xl overflow-hidden border-t-4 border-sky-500 animate-fade-in-up">
+                    <div class="bg-white shadow-2xl rounded-2xl overflow-hidden border-t-4 border-harvest-500 animate-fade-in-up">
                         <div class="p-8 sm:p-10">
                             <div class="mb-8 text-center">
-                                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-sky-400 to-sky-600 text-white mb-4 shadow-lg">
+                                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-harvest text-white mb-4 shadow-lg">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>

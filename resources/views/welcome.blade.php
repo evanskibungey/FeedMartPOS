@@ -527,8 +527,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('pos.login') }}" class="text-gray-400 hover:text-sky-400 transition-colors flex items-center space-x-2">
-                                    <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+                                <a href="{{ route('pos.login') }}" class="text-gray-400 hover:text-harvest-400 transition-colors flex items-center space-x-2">
+                                    <span class="h-2 w-2 rounded-full bg-harvest-500"></span>
                                     <span>POS Portal</span>
                                 </a>
                             </li>
