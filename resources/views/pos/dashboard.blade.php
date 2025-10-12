@@ -1,243 +1,367 @@
+
 <x-pos-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-bold text-3xl text-gray-800 leading-tight">
-                {{ __('Point of Sale') }}
-            </h2>
-            <div class="flex items-center space-x-2 text-sm text-gray-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span>{{ now()->format('l, F j, Y') }}</span>
+            <h2 class="font-bold text-3xl text-gray-800 leading-tight">{{ __('POS Terminal') }}</h2>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    <span>{{ auth()->user()->name }}</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <span>{{ now()->format('l, F j, Y') }}</span>
+                </div>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <!-- Welcome Message -->
-            <div class="bg-gradient-harvest rounded-2xl shadow-lg p-8 text-white animate-fade-in-up">
-                <div class="flex items-center justify-between">
-                    <div class="space-y-2">
-                        <h3 class="text-2xl font-bold">Ready to serve, {{ $user->name }}! 🛒</h3>
-                        <p class="text-harvest-50 text-lg">Your POS terminal is active and ready for transactions</p>
-                        <div class="flex items-center space-x-4 mt-4">
-                            <div class="flex items-center space-x-2 bg-white/20 rounded-lg px-4 py-2">
-                                <span class="h-2 w-2 bg-green-400 rounded-full animate-pulse"></span>
-                                <span class="text-sm font-semibold">System Online</span>
-                            </div>
-                            <div class="flex items-center space-x-2 bg-white/20 rounded-lg px-4 py-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span class="text-sm font-semibold">{{ now()->format('h:i A') }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hidden md:block">
-                        <svg class="w-32 h-32 opacity-20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-slide-in-right">
-                <!-- Today's Sales -->
-                <div class="stat-card stat-card-harvest group cursor-pointer">
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-white rounded-lg shadow-md p-4 border-l-4 border-harvest-500">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600 text-sm font-medium mb-1">Today's Sales</p>
-                            <p class="text-3xl font-bold text-gray-800">KES 0.00</p>
-                            <p class="text-harvest-600 text-sm font-medium mt-1">0 transactions</p>
+                            <p class="text-sm text-gray-600">Today's Sales</p>
+                            <p class="text-2xl font-bold text-gray-800">KES {{ number_format($todayStats['sales'], 2) }}</p>
                         </div>
-                        <div class="h-16 w-16 bg-gradient-harvest rounded-xl flex items-center justify-center text-white shadow-harvest group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                        <div class="h-12 w-12 bg-harvest-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-harvest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
                     </div>
                 </div>
-
-                <!-- Total Transactions -->
-                <div class="stat-card stat-card-agri group cursor-pointer">
+                <div class="bg-white rounded-lg shadow-md p-4 border-l-4 border-agri-500">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600 text-sm font-medium mb-1">Transactions</p>
-                            <p class="text-3xl font-bold text-gray-800">0</p>
-                            <p class="text-agri-600 text-sm font-medium mt-1">Completed today</p>
+                            <p class="text-sm text-gray-600">Transactions</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $todayStats['transactions'] }}</p>
                         </div>
-                        <div class="h-16 w-16 bg-gradient-agri rounded-xl flex items-center justify-center text-white shadow-agri group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                            </svg>
+                        <div class="h-12 w-12 bg-agri-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-agri-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
                         </div>
                     </div>
                 </div>
-
-                <!-- Items Sold -->
-                <div class="stat-card stat-card-earth group cursor-pointer">
+                <div class="bg-white rounded-lg shadow-md p-4 border-l-4 border-blue-500">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600 text-sm font-medium mb-1">Items Sold</p>
-                            <p class="text-3xl font-bold text-gray-800">0</p>
-                            <p class="text-earth-600 text-sm font-medium mt-1">Products moved</p>
+                            <p class="text-sm text-gray-600">Items Sold</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $todayStats['items_sold'] }}</p>
                         </div>
-                        <div class="h-16 w-16 bg-gradient-earth rounded-xl flex items-center justify-center text-white shadow-earth group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cash in Drawer -->
-                <div class="stat-card stat-card-sky group cursor-pointer">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm font-medium mb-1">Cash Drawer</p>
-                            <p class="text-3xl font-bold text-gray-800">KES 0.00</p>
-                            <p class="text-sky-600 text-sm font-medium mt-1">Available cash</p>
-                        </div>
-                        <div class="h-16 w-16 bg-gradient-to-br from-sky-400 to-sky-600 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
+                        <div class="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Actions & Recent Sales -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Quick Actions -->
-                <div class="card">
-                    <div class="card-header bg-gradient-harvest">
-                        <h3 class="text-lg font-semibold flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            Quick Actions
-                        </h3>
+            <!-- Main Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Products Section -->
+                <div class="lg:col-span-2 space-y-4">
+                    <!-- Search Form -->
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <form method="GET" action="{{ route('pos.dashboard') }}">
+                            <div class="flex flex-col md:flex-row gap-3">
+                                <div class="flex-1">
+                                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search products..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-harvest-500">
+                                </div>
+                                <div class="w-full md:w-64">
+                                    <select name="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                                        <option value="">All Categories</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" {{ $categoryId == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="px-6 py-2 bg-harvest-600 text-white rounded-lg hover:bg-harvest-700">Search</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="card-body">
-                        <div class="space-y-3">
-                            <button class="bg-gradient-harvest text-white px-6 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 w-full text-left flex items-center justify-between group">
-                                <span class="flex items-center">
-                                    <svg class="w-6 h-6 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                    </svg>
-                                    <div>
-                                        <div class="font-bold text-lg">Start New Sale</div>
-                                        <div class="text-sm text-harvest-100">Process customer transaction</div>
+
+                    <!-- Products Grid -->
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <h3 class="text-lg font-semibold mb-4">Products</h3>
+                        @if($products->isEmpty())
+                            <p class="text-center py-12 text-gray-500">No products found</p>
+                        @else
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-h-[600px] overflow-y-auto">
+                                @foreach($products as $product)
+                                    <div class="bg-gray-50 rounded-lg p-3 border hover:border-harvest-500 cursor-pointer" onclick="addToCart({{ $product->id }}, '{{ addslashes($product->name) }}', {{ $product->selling_price }}, {{ $product->quantity_in_stock }})">
+                                        <div class="aspect-square bg-white rounded mb-2 flex items-center justify-center">
+                                            @if($product->image_url)
+                                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                            @else
+                                                <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                                            @endif
+                                        </div>
+                                        <h4 class="font-semibold text-sm mb-1">{{ $product->name }}</h4>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-lg font-bold text-harvest-600">KES {{ number_format($product->selling_price, 2) }}</span>
+                                            <span class="text-xs text-gray-500">Stock: {{ $product->quantity_in_stock }}</span>
+                                        </div>
                                     </div>
-                                </span>
-                                <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <button class="btn-agri w-full text-left flex items-center justify-between group">
-                                <span class="flex items-center">
-                                    <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                    </svg>
-                                    View Transactions
-                                </span>
-                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <button class="btn-earth w-full text-left flex items-center justify-between group">
-                                <span class="flex items-center">
-                                    <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
-                                    Generate Report
-                                </span>
-                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <button class="bg-gradient-to-br from-sky-400 to-sky-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 w-full text-left flex items-center justify-between group">
-                                <span class="flex items-center">
-                                    <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                    Cash Management
-                                </span>
-                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
 
-                <!-- Recent Sales Activity -->
-                <div class="card">
-                    <div class="card-header bg-gradient-agri">
-                        <h3 class="text-lg font-semibold flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Recent Activity
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center py-12">
-                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
-                            </div>
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">No transactions yet</h4>
-                            <p class="text-gray-600 mb-6">Start your first sale to see activity here</p>
-                            <button class="bg-gradient-harvest text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 inline-flex items-center space-x-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                </svg>
-                                <span>Start First Sale</span>
-                            </button>
+                <!-- Cart Section -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-md p-4 sticky top-4">
+                        <div class="flex justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Cart (<span id="itemCount">0</span>)</h3>
+                            <button onclick="clearCart()" class="text-red-500 text-sm">Clear</button>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- System Status Info -->
-            <div class="bg-harvest-50 border-l-4 border-harvest-500 p-6 rounded-lg shadow-sm">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <svg class="h-6 w-6 text-harvest-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-3 flex-1">
-                        <h3 class="text-sm font-semibold text-harvest-800 mb-1">POS Terminal Ready</h3>
-                        <p class="text-sm text-harvest-700">
-                            Your point of sale system is fully operational. You can start processing sales and managing transactions. 
-                            The system automatically saves all transactions and syncs with the main database.
-                        </p>
-                        <div class="mt-4 flex items-center space-x-4">
-                            <div class="flex items-center space-x-2 text-sm text-harvest-700">
-                                <span class="h-2 w-2 bg-green-500 rounded-full"></span>
-                                <span class="font-medium">Database Connected</span>
+                        <div id="emptyCart" class="text-center py-8">
+                            <p class="text-gray-500">Cart is empty</p>
+                        </div>
+
+                        <div id="cartItemsList" class="space-y-3 mb-4 max-h-64 overflow-y-auto hidden"></div>
+
+                        <div id="paymentMethodSection" class="mb-4 opacity-50 pointer-events-none">
+                            <h4 class="text-sm font-semibold mb-2">Payment Method</h4>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button id="cashBtn" onclick="selectPaymentMethod('cash')" class="payment-method-btn payment-method-active">Cash</button>
+                                <button id="mpesaBtn" onclick="selectPaymentMethod('mpesa')" class="payment-method-btn">M-Pesa</button>
                             </div>
-                            <div class="flex items-center space-x-2 text-sm text-harvest-700">
-                                <span class="h-2 w-2 bg-green-500 rounded-full"></span>
-                                <span class="font-medium">Printer Ready</span>
+                            <p id="paymentNote" class="text-xs text-gray-500 mt-2">Cash selected</p>
+                        </div>
+
+                        <div class="border-t pt-4 space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">KES 0.00</span>
                             </div>
-                            <div class="flex items-center space-x-2 text-sm text-harvest-700">
-                                <span class="h-2 w-2 bg-green-500 rounded-full"></span>
-                                <span class="font-medium">Cash Drawer OK</span>
+                            <div class="flex justify-between text-sm">
+                                <span>Tax (16%):</span>
+                                <span id="tax">KES 0.00</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-bold border-t pt-2">
+                                <span>Total:</span>
+                                <span id="total" class="text-harvest-600">KES 0.00</span>
                             </div>
                         </div>
+
+                        <button id="checkoutBtn" onclick="proceedToCheckout()" disabled class="w-full mt-4 bg-harvest-600 text-white py-3 rounded-lg disabled:bg-gray-300">Complete Sale (F9)</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="receiptModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold mb-2">FeedMart POS</h2>
+                <p class="text-sm text-gray-600">Sales Receipt</p>
+                <div class="mt-4 border-t border-b py-2">
+                    <p class="text-sm"><strong>Receipt #:</strong> <span id="receiptNumber"></span></p>
+                    <p class="text-sm"><strong>Date:</strong> <span id="receiptDate"></span></p>
+                    <p class="text-sm"><strong>Cashier:</strong> {{ auth()->user()->name }}</p>
+                    <p class="text-sm"><strong>Payment:</strong> <span id="receiptPaymentMethod"></span></p>
+                </div>
+            </div>
+
+            <table class="w-full mb-4">
+                <thead>
+                    <tr class="border-b">
+                        <th class="text-left py-2 text-sm">Item</th>
+                        <th class="text-center py-2 text-sm">Qty</th>
+                        <th class="text-right py-2 text-sm">Price</th>
+                        <th class="text-right py-2 text-sm">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptItems"></tbody>
+            </table>
+
+            <div class="border-t pt-4 space-y-2">
+                <div class="flex justify-between text-sm">
+                    <span>Subtotal:</span>
+                    <span id="receiptSubtotal"></span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span>Tax:</span>
+                    <span id="receiptTax"></span>
+                </div>
+                <div class="flex justify-between text-lg font-bold border-t pt-2">
+                    <span>Total:</span>
+                    <span id="receiptTotal"></span>
+                </div>
+            </div>
+
+            <div class="mt-6 space-y-3">
+                <button onclick="printReceipt()" class="w-full bg-harvest-600 text-white py-2 rounded-lg">Print Receipt</button>
+                <button onclick="newSale()" class="w-full bg-agri-600 text-white py-2 rounded-lg">New Sale</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .payment-method-btn { padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-weight: 600; cursor: pointer; }
+        .payment-method-btn:hover { border-color: #059669; background-color: #f0fdf4; }
+        .payment-method-active { border-color: #059669; background-color: #d1fae5; color: #065f46; }
+    </style>
+
+    <script>
+        let cart = [];
+        let selectedPaymentMethod = 'cash';
+
+        function addToCart(productId, productName, price, maxStock) {
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                if (existingItem.quantity < maxStock) {
+                    existingItem.quantity++;
+                    existingItem.total = existingItem.quantity * existingItem.price;
+                } else {
+                    alert('Cannot exceed maximum stock!');
+                    return;
+                }
+            } else {
+                cart.push({ id: productId, name: productName, price: price, quantity: 1, total: price, maxStock: maxStock });
+            }
+            updateCart();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                const newQuantity = item.quantity + change;
+                if (newQuantity > 0 && newQuantity <= item.maxStock) {
+                    item.quantity = newQuantity;
+                    item.total = item.quantity * item.price;
+                    updateCart();
+                } else if (newQuantity > item.maxStock) {
+                    alert('Cannot exceed maximum stock!');
+                } else if (newQuantity === 0) {
+                    removeFromCart(productId);
+                }
+            }
+        }
+
+        function updateCart() {
+            const cartItemsList = document.getElementById('cartItemsList');
+            const emptyCart = document.getElementById('emptyCart');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const paymentMethodSection = document.getElementById('paymentMethodSection');
+            
+            if (cart.length === 0) {
+                cartItemsList.classList.add('hidden');
+                emptyCart.classList.remove('hidden');
+                checkoutBtn.disabled = true;
+                paymentMethodSection.classList.add('opacity-50', 'pointer-events-none');
+            } else {
+                emptyCart.classList.add('hidden');
+                cartItemsList.classList.remove('hidden');
+                checkoutBtn.disabled = false;
+                paymentMethodSection.classList.remove('opacity-50', 'pointer-events-none');
+                
+                cartItemsList.innerHTML = cart.map(item => `
+                    <div class="bg-gray-50 rounded-lg p-3 border">
+                        <div class="flex justify-between mb-2">
+                            <div>
+                                <h4 class="font-semibold text-sm">${item.name}</h4>
+                                <p class="text-xs text-gray-600">KES ${item.price.toFixed(2)} each</p>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500">×</button>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center space-x-2 bg-white rounded border">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="px-3 py-1">-</button>
+                                <span class="px-3 font-semibold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="px-3 py-1">+</button>
+                            </div>
+                            <span class="font-bold text-harvest-600">KES ${item.total.toFixed(2)}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            const subtotal = cart.reduce((sum, item) => sum + item.total, 0);
+            const tax = subtotal * 0.16;
+            const total = subtotal + tax;
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            document.getElementById('itemCount').textContent = itemCount;
+            document.getElementById('subtotal').textContent = `KES ${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `KES ${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `KES ${total.toFixed(2)}`;
+        }
+
+        function clearCart() {
+            if (cart.length === 0) return;
+            if (confirm('Clear cart?')) {
+                cart = [];
+                updateCart();
+            }
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            document.getElementById('cashBtn').classList.remove('payment-method-active');
+            document.getElementById('mpesaBtn').classList.remove('payment-method-active');
+            document.getElementById(method + 'Btn').classList.add('payment-method-active');
+            document.getElementById('paymentNote').textContent = method === 'cash' ? 'Cash payment selected' : 'M-Pesa (Coming soon)';
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            
+            const receiptNumber = 'RCP-' + Date.now().toString().slice(-8);
+            const currentDate = new Date().toLocaleString('en-KE', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const subtotal = cart.reduce((sum, item) => sum + item.total, 0);
+            const tax = subtotal * 0.16;
+            const total = subtotal + tax;
+            
+            document.getElementById('receiptNumber').textContent = receiptNumber;
+            document.getElementById('receiptDate').textContent = currentDate;
+            document.getElementById('receiptPaymentMethod').textContent = selectedPaymentMethod.toUpperCase();
+            document.getElementById('receiptItems').innerHTML = cart.map(item => `
+                <tr>
+                    <td class="py-2">${item.name}</td>
+                    <td class="py-2 text-center">${item.quantity}</td>
+                    <td class="py-2 text-right">${item.price.toFixed(2)}</td>
+                    <td class="py-2 text-right font-semibold">${item.total.toFixed(2)}</td>
+                </tr>
+            `).join('');
+            document.getElementById('receiptSubtotal').textContent = `KES ${subtotal.toFixed(2)}`;
+            document.getElementById('receiptTax').textContent = `KES ${tax.toFixed(2)}`;
+            document.getElementById('receiptTotal').textContent = `KES ${total.toFixed(2)}`;
+            document.getElementById('receiptModal').classList.remove('hidden');
+        }
+
+        function printReceipt() {
+            window.print();
+        }
+
+        function newSale() {
+            cart = [];
+            updateCart();
+            document.getElementById('receiptModal').classList.add('hidden');
+            selectPaymentMethod('cash');
+            alert('Sale completed!');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCart();
+            selectPaymentMethod('cash');
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F9' && cart.length > 0) {
+                e.preventDefault();
+                proceedToCheckout();
+            }
+            if (e.key === 'Escape') {
+                document.getElementById('receiptModal').classList.add('hidden');
+            }
+        });
+    </script>
 </x-pos-app-layout>
