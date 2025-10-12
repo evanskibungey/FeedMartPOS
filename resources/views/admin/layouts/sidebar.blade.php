@@ -17,7 +17,7 @@
                 <div class="flex-shrink-0">
                     <x-application-logo class="h-10 w-10 transition-transform duration-300 group-hover:scale-110" />
                 </div>
-                <div x-show="!sidebarCollapsed" 
+                <div x-show="!sidebarCollapsed"
                      x-transition:enter="transition ease-out duration-200"
                      x-transition:enter-start="opacity-0 translate-x-2"
                      x-transition:enter-end="opacity-100 translate-x-0"
@@ -25,7 +25,7 @@
                      x-transition:leave-start="opacity-100"
                      x-transition:leave-end="opacity-0"
                      class="flex flex-col">
-                    <span class="text-xl font-bold bg-gradient-harvest bg-clip-text text-transparent whitespace-nowrap">FeedMart</span>
+                    <span class="text-xl font-bold bg-gradient-harvest bg-clip-text text-transparent whitespace-nowrap">{{ \App\Models\Setting::systemName() }}</span>
                     <span class="text-xs text-harvest-600 font-semibold -mt-0.5 whitespace-nowrap">Admin Portal</span>
                 </div>
             </a>
@@ -298,20 +298,20 @@
             </div>
 
             <!-- Settings -->
-            <a href="#" 
-               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200 text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700">
+            <a href="{{ route('admin.settings.index') }}"
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.settings.*')
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105'
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
                 <div class="flex-shrink-0">
                     <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </div>
-                <span x-show="!sidebarCollapsed" 
+                <span x-show="!sidebarCollapsed"
                       x-transition
                       class="font-semibold whitespace-nowrap">Settings</span>
-                <span x-show="!sidebarCollapsed" 
-                      x-transition
-                      class="ml-auto px-1.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-700 rounded">Soon</span>
             </a>
         </nav>
 

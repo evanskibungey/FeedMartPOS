@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PurchaseOrderController;
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\POS\POSDashboardController;
 use App\Http\Controllers\POS\POSLoginController;
 use App\Http\Controllers\POS\SaleController;
@@ -101,6 +102,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/adjust', [InventoryController::class, 'adjustStock'])->name('adjust');
             Route::post('/adjust', [InventoryController::class, 'processAdjustment'])->name('adjust.store');
         });
+
+        // Settings Routes
+        Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+        Route::post('/settings/system', [SettingsController::class, 'updateSystem'])->name('settings.update-system');
+        Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.update-profile');
+        Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.update-password');
+        Route::delete('/settings/logo', [SettingsController::class, 'removeLogo'])->name('settings.remove-logo');
     });
 });
 

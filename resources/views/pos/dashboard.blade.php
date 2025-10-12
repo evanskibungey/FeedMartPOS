@@ -160,7 +160,7 @@
     <div id="receiptModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
             <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold mb-2 text-harvest-700">FeedMart POS</h2>
+                <h2 class="text-2xl font-bold mb-2 text-harvest-700">{{ \App\Models\Setting::systemName() }}</h2>
                 <p class="text-sm text-gray-600">Sales Receipt</p>
                 <div class="mt-4 border-t border-b py-2 text-left">
                     <p class="text-sm"><strong>Receipt #:</strong> <span id="receiptNumber"></span></p>
