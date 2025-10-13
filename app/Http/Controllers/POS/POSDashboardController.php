@@ -61,4 +61,61 @@ class POSDashboardController extends Controller
         
         return view('pos.dashboard', compact('user', 'products', 'categories', 'categoryId', 'search', 'todayStats'));
     }
+
+    /**
+     * Get product details including price range for POS
+     */
+    public function getProduct($id)
+    {
+        try {
+            $product = Product::with(['category', 'brand'])
+                ->where('status', 'active')
+                ->findOrFail($id);
+
+            // Check if min/max selling price columns exist (migration may not have run)
+            $hasMinMaxPrice = \Schema::hasColumn('products', 'min_selling_price');
+            
+            $minPrice = $hasMinMaxPrice && $product->min_selling_price 
+                ? $product->min_selling_price 
+                : $product->cost_price;
+                
+            $maxPrice = $hasMinMaxPrice && $product->max_selling_price 
+                ? $product->max_selling_price 
+                : $product->price;
+
+            return response()->json([
+                'success' => true,
+                'product' => [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'sku' => $product->sku,
+                    'category' => $product->category->name,
+                    'brand' => $product->brand->name,
+                    'unit' => $product->unit,
+                    'quantity_in_stock' => $product->quantity_in_stock,
+                    'price' => $product->price,
+                    'min_selling_price' => $minPrice,
+                    'max_selling_price' => $maxPrice,
+                    'default_selling_price' => $maxPrice,
+                    'tax_rate' => $product->tax_rate,
+                    'image_url' => $product->image_url,
+                    'price_range' => [
+                        'min' => number_format($minPrice, 2),
+                        'max' => number_format($maxPrice, 2),
+                        'currency' => 'KES',
+                    ],
+                ],
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching product for POS: ' . $e->getMessage(), [
+                'product_id' => $id,
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch product details: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

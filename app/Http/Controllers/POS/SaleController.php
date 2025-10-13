@@ -30,6 +30,8 @@ class SaleController extends Controller
             'customer_name' => 'nullable|string|max:255',
             'customer_phone' => 'nullable|string|max:20',
             'notes' => 'nullable|string|max:1000',
+        ], [
+            'items.*.price.min' => 'Price must be greater than or equal to the minimum selling price.',
         ]);
 
         DB::beginTransaction();
@@ -54,6 +56,22 @@ class SaleController extends Controller
                 if ($product->quantity_in_stock < $item['quantity']) {
                     throw ValidationException::withMessages([
                         'items' => "Insufficient stock for '{$product->name}'. Available: {$product->quantity_in_stock}, Requested: {$item['quantity']}"
+                    ]);
+                }
+
+                // Validate price is within allowed range
+                $minPrice = $product->min_selling_price ?? $product->cost_price;
+                $maxPrice = $product->max_selling_price ?? $product->price;
+
+                if ($item['price'] < $minPrice) {
+                    throw ValidationException::withMessages([
+                        'items' => "Price for '{$product->name}' cannot be lower than the minimum selling price of KES " . number_format($minPrice, 2)
+                    ]);
+                }
+
+                if ($item['price'] > $maxPrice) {
+                    throw ValidationException::withMessages([
+                        'items' => "Price for '{$product->name}' cannot be higher than the maximum selling price of KES " . number_format($maxPrice, 2)
                     ]);
                 }
 

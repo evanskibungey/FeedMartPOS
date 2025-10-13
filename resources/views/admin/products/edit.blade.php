@@ -127,6 +127,7 @@
                                     <span class="absolute left-3 top-3 text-gray-500">KES</span>
                                     <x-text-input id="cost_price" name="cost_price" type="number" step="0.01" :value="old('cost_price', $product->cost_price)" required class="pl-14 w-full" />
                                 </div>
+                                <p class="text-xs text-gray-500 mt-1">Your purchase/cost price</p>
                                 <x-input-error :messages="$errors->get('cost_price')" class="mt-2" />
                             </div>
                             <div>
@@ -135,6 +136,7 @@
                                     <span class="absolute left-3 top-3 text-gray-500">KES</span>
                                     <x-text-input id="wholesale_price" name="wholesale_price" type="number" step="0.01" :value="old('wholesale_price', $product->wholesale_price)" class="pl-14 w-full" />
                                 </div>
+                                <p class="text-xs text-gray-500 mt-1">Optional bulk pricing</p>
                                 <x-input-error :messages="$errors->get('wholesale_price')" class="mt-2" />
                             </div>
                             <div>
@@ -143,9 +145,36 @@
                                     <span class="absolute left-3 top-3 text-gray-500">KES</span>
                                     <x-text-input id="price" name="price" type="number" step="0.01" :value="old('price', $product->price)" required class="pl-14 w-full" />
                                 </div>
+                                <p class="text-xs text-gray-500 mt-1">Standard retail price</p>
                                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
                             </div>
                         </div>
+                        
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-900 mb-3">Dynamic Pricing (POS Price Range)</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <x-input-label for="min_selling_price" value="Minimum Selling Price (KES)" class="required" />
+                                    <div class="relative mt-2">
+                                        <span class="absolute left-3 top-3 text-gray-500">KES</span>
+                                        <x-text-input id="min_selling_price" name="min_selling_price" type="number" step="0.01" :value="old('min_selling_price', $product->min_selling_price)" required class="pl-14 w-full" />
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-1">Lowest price allowed during sales</p>
+                                    <x-input-error :messages="$errors->get('min_selling_price')" class="mt-2" />
+                                </div>
+                                <div>
+                                    <x-input-label for="max_selling_price" value="Maximum Selling Price (KES)" class="required" />
+                                    <div class="relative mt-2">
+                                        <span class="absolute left-3 top-3 text-gray-500">KES</span>
+                                        <x-text-input id="max_selling_price" name="max_selling_price" type="number" step="0.01" :value="old('max_selling_price', $product->max_selling_price)" required class="pl-14 w-full" />
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-1">Standard/highest price (default POS price)</p>
+                                    <x-input-error :messages="$errors->get('max_selling_price')" class="mt-2" />
+                                </div>
+                            </div>
+                            <p class="text-xs text-blue-700 mt-3"><strong>Note:</strong> POS users can adjust prices within this range when making sales.</p>
+                        </div>
+                        
                         <div>
                             <x-input-label for="tax_rate" value="Tax Rate (%)" />
                             <x-text-input id="tax_rate" name="tax_rate" type="number" step="0.01" :value="old('tax_rate', $product->tax_rate)" class="mt-2 w-full" placeholder="e.g., 16" />

@@ -131,6 +131,9 @@ Route::prefix('pos')->name('pos.')->group(function () {
         Route::get('/dashboard', [POSDashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [POSLoginController::class, 'destroy'])->name('logout');
         
+        // Product API Routes
+        Route::get('/products/{id}', [POSDashboardController::class, 'getProduct'])->name('products.show');
+        
         // Sale Routes
         Route::post('/sales', [SaleController::class, 'store'])->name('sales.store');
         Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');

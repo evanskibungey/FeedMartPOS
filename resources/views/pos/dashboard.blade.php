@@ -86,7 +86,7 @@
                         @else
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-h-[600px] overflow-y-auto">
                                 @foreach($products as $product)
-                                    <div class="bg-gray-50 rounded-lg p-3 border hover:border-harvest-500 cursor-pointer" onclick="addToCart({{ $product->id }}, '{{ addslashes($product->name) }}', {{ $product->selling_price }}, {{ $product->quantity_in_stock }})">
+                                    <div class="bg-gray-50 rounded-lg p-3 border hover:border-harvest-500 cursor-pointer" onclick="addToCart({{ $product->id }})">
                                         <div class="aspect-square bg-white rounded mb-2 flex items-center justify-center">
                                             @if($product->image_url)
                                                 <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover rounded">
@@ -248,31 +248,90 @@
         let selectedPaymentMethod = 'cash';
         let isProcessingSale = false;
 
-        function addToCart(productId, productName, price, maxStock) {
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                if (existingItem.quantity < maxStock) {
-                    existingItem.quantity++;
-                    existingItem.total = existingItem.quantity * existingItem.price;
-                } else {
-                    showAlert('Cannot exceed maximum stock of ' + maxStock + '!', 'warning');
+        async function addToCart(productId) {
+            try {
+                // Fetch product details with price range
+                const response = await fetch(`/pos/products/${productId}`);
+                
+                // Check if response is ok
+                if (!response.ok) {
+                    console.error('Response not OK:', response.status, response.statusText);
+                    const errorText = await response.text();
+                    console.error('Error details:', errorText);
+                    showAlert('Failed to fetch product details. Status: ' + response.status, 'error');
                     return;
                 }
-            } else {
-                cart.push({ 
-                    id: productId, 
-                    name: productName, 
-                    price: price, 
-                    quantity: 1, 
-                    total: price, 
-                    maxStock: maxStock 
-                });
+                
+                const data = await response.json();
+                console.log('Product data received:', data);
+                
+                if (!data.success) {
+                    console.error('API returned success=false:', data);
+                    showAlert('Failed to fetch product details', 'error');
+                    return;
+                }
+                
+                const product = data.product;
+                
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    if (existingItem.quantity < product.quantity_in_stock) {
+                        existingItem.quantity++;
+                    } else {
+                        showAlert('Cannot exceed maximum stock of ' + product.quantity_in_stock + '!', 'warning');
+                        return;
+                    }
+                } else {
+                    // Add new item with price range info
+                    cart.push({ 
+                        id: product.id, 
+                        name: product.name,
+                        sku: product.sku,
+                        price: parseFloat(product.default_selling_price),
+                        min_price: parseFloat(product.min_selling_price),
+                        max_price: parseFloat(product.max_selling_price),
+                        quantity: 1,
+                        maxStock: product.quantity_in_stock
+                    });
+                }
+                
+                updateCart();
+                
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                console.error('Error stack:', error.stack);
+                showAlert('Failed to add product to cart: ' + error.message, 'error');
             }
-            updateCart();
         }
 
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function updatePrice(productId, newPrice) {
+            const item = cart.find(item => item.id === productId);
+            if (!item) return;
+            
+            const price = parseFloat(newPrice);
+            
+            // Validate price range
+            if (price < item.min_price) {
+                showAlert(`Price cannot be lower than KES ${item.min_price.toFixed(2)}`, 'warning');
+                updateCart(); // Reset display
+                return;
+            }
+            
+            if (price > item.max_price) {
+                showAlert(`Price cannot be higher than KES ${item.max_price.toFixed(2)}`, 'warning');
+                updateCart(); // Reset display
+                return;
+            }
+            
+            // Valid price - update
+            item.price = price;
             updateCart();
         }
 
@@ -282,7 +341,6 @@
                 const newQuantity = item.quantity + change;
                 if (newQuantity > 0 && newQuantity <= item.maxStock) {
                     item.quantity = newQuantity;
-                    item.total = item.quantity * item.price;
                     updateCart();
                 } else if (newQuantity > item.maxStock) {
                     showAlert('Cannot exceed maximum stock!', 'warning');
@@ -309,14 +367,27 @@
                 checkoutBtn.disabled = false;
                 paymentMethodSection.classList.remove('opacity-50', 'pointer-events-none');
                 
-                cartItemsList.innerHTML = cart.map(item => `
+                cartItemsList.innerHTML = cart.map((item, index) => `
                     <div class="bg-gray-50 rounded-lg p-3 border">
                         <div class="flex justify-between mb-2">
                             <div class="flex-1">
                                 <h4 class="font-semibold text-sm truncate">${item.name}</h4>
-                                <p class="text-xs text-gray-600">KES ${item.price.toFixed(2)} each</p>
+                                <p class="text-xs text-gray-500">SKU: ${item.sku}</p>
                             </div>
                             <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 font-bold text-lg ml-2">×</button>
+                        </div>
+                        <div class="mb-2">
+                            <label class="text-xs text-gray-600 block mb-1">Price (KES)</label>
+                            <input 
+                                type="number" 
+                                step="0.01" 
+                                value="${item.price}" 
+                                min="${item.min_price}" 
+                                max="${item.max_price}"
+                                onchange="updatePrice(${item.id}, this.value)"
+                                class="w-full px-3 py-1 border rounded text-sm"
+                            />
+                            <p class="text-xs text-gray-500 mt-1">Range: KES ${item.min_price.toFixed(2)} - ${item.max_price.toFixed(2)}</p>
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center space-x-2 bg-white rounded border">
@@ -324,13 +395,13 @@
                                 <span class="px-3 font-semibold">${item.quantity}</span>
                                 <button onclick="updateQuantity(${item.id}, 1)" class="px-3 py-1 hover:bg-gray-100">+</button>
                             </div>
-                            <span class="font-bold text-harvest-600">KES ${item.total.toFixed(2)}</span>
+                            <span class="font-bold text-harvest-600">KES ${(item.quantity * item.price).toFixed(2)}</span>
                         </div>
                     </div>
                 `).join('');
             }
             
-            const subtotal = cart.reduce((sum, item) => sum + item.total, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.quantity * item.price), 0);
             const tax = subtotal * 0.16;
             const total = subtotal + tax;
             const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);

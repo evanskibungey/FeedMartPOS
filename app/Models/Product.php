@@ -22,6 +22,8 @@ class Product extends Model
         'quantity_in_stock',
         'reorder_level',
         'price',
+        'min_selling_price',
+        'max_selling_price',
         'wholesale_price',
         'cost_price',
         'image',
@@ -34,19 +36,61 @@ class Product extends Model
         'quantity_in_stock' => 'integer',
         'reorder_level' => 'integer',
         'price' => 'decimal:2',
+        'min_selling_price' => 'decimal:2',
+        'max_selling_price' => 'decimal:2',
         'wholesale_price' => 'decimal:2',
         'cost_price' => 'decimal:2',
         'tax_rate' => 'decimal:2',
     ];
 
-    protected $appends = ['selling_price', 'image_url'];
+    protected $appends = ['selling_price', 'image_url', 'price_range'];
 
     /**
-     * Get the selling price (alias for price)
+     * Get the selling price (alias for max_selling_price or price)
      */
     public function getSellingPriceAttribute()
     {
-        return $this->price;
+        // Return max_selling_price if set, otherwise fall back to price
+        return $this->max_selling_price ?? $this->price;
+    }
+
+    /**
+     * Get the price range for display
+     */
+    public function getPriceRangeAttribute()
+    {
+        return [
+            'min' => $this->min_selling_price,
+            'max' => $this->max_selling_price ?? $this->price,
+            'default' => $this->max_selling_price ?? $this->price,
+        ];
+    }
+
+    /**
+     * Validate if a given price is within the allowed range
+     */
+    public function isPriceValid(float $price): bool
+    {
+        $minPrice = $this->min_selling_price ?? $this->cost_price;
+        $maxPrice = $this->max_selling_price ?? $this->price;
+        
+        return $price >= $minPrice && $price <= $maxPrice;
+    }
+
+    /**
+     * Get the minimum allowed selling price
+     */
+    public function getMinPriceAttribute()
+    {
+        return $this->min_selling_price ?? $this->cost_price;
+    }
+
+    /**
+     * Get the maximum allowed selling price
+     */
+    public function getMaxPriceAttribute()
+    {
+        return $this->max_selling_price ?? $this->price;
     }
 
     /**
