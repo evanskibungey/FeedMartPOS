@@ -152,7 +152,8 @@
                         
                         <div>
                             <x-input-label for="tax_rate" value="Tax Rate (%) *" />
-                            <x-text-input id="tax_rate" name="tax_rate" type="number" step="0.01" :value="old('tax_rate', '16')" required class="mt-2 w-full" />
+                            <x-text-input id="tax_rate" name="tax_rate" type="number" step="0.01" :value="old('tax_rate', '0')" required class="mt-2 w-full" />
+                            <p class="text-xs text-gray-500 mt-1">Enter 0 for no tax, or the applicable percentage (e.g., 16 for 16% VAT)</p>
                             <x-input-error :messages="$errors->get('tax_rate')" class="mt-2" />
                         </div>
                     </div>

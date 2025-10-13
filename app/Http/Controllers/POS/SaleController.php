@@ -37,8 +37,9 @@ class SaleController extends Controller
         DB::beginTransaction();
 
         try {
-            // Calculate totals
+            // Calculate totals with product-specific tax rates
             $subtotal = 0;
+            $totalTaxAmount = 0;
             $itemsData = [];
 
             // Validate stock and prepare items
@@ -77,19 +78,25 @@ class SaleController extends Controller
 
                 $itemSubtotal = $item['quantity'] * $item['price'];
                 $subtotal += $itemSubtotal;
+                
+                // Calculate tax for this item based on product's tax rate
+                $itemTaxRate = $product->tax_rate ?? 0;
+                $itemTaxAmount = round($itemSubtotal * ($itemTaxRate / 100), 2);
+                $totalTaxAmount += $itemTaxAmount;
 
                 $itemsData[] = [
                     'product' => $product,
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
                     'subtotal' => $itemSubtotal,
+                    'tax_rate' => $itemTaxRate,
+                    'tax_amount' => $itemTaxAmount,
                 ];
             }
 
-            // Calculate tax (16% VAT)
-            $taxRate = 16.00;
-            $taxAmount = round($subtotal * ($taxRate / 100), 2);
-            $totalAmount = $subtotal + $taxAmount;
+            // Calculate overall tax rate (weighted average)
+            $overallTaxRate = $subtotal > 0 ? round(($totalTaxAmount / $subtotal) * 100, 2) : 0;
+            $totalAmount = $subtotal + $totalTaxAmount;
 
             // Generate receipt number
             $receiptNumber = Sale::generateReceiptNumber();
@@ -101,8 +108,8 @@ class SaleController extends Controller
                 'customer_name' => $validated['customer_name'] ?? null,
                 'customer_phone' => $validated['customer_phone'] ?? null,
                 'subtotal' => $subtotal,
-                'tax_amount' => $taxAmount,
-                'tax_rate' => $taxRate,
+                'tax_amount' => $totalTaxAmount,
+                'tax_rate' => $overallTaxRate,
                 'total_amount' => $totalAmount,
                 'payment_method' => $validated['payment_method'],
                 'payment_reference' => $validated['payment_reference'] ?? null,

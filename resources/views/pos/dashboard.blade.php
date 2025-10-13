@@ -138,7 +138,7 @@
                                 <span id="subtotal">KES 0.00</span>
                             </div>
                             <div class="flex justify-between text-sm">
-                                <span>Tax (16%):</span>
+                                <span>Tax:</span>
                                 <span id="tax">KES 0.00</span>
                             </div>
                             <div class="flex justify-between text-lg font-bold border-t pt-2">
@@ -190,7 +190,7 @@
                     <span id="receiptSubtotal"></span>
                 </div>
                 <div class="flex justify-between text-sm">
-                    <span>Tax (16%):</span>
+                    <span>Tax:</span>
                     <span id="receiptTax"></span>
                 </div>
                 <div class="flex justify-between text-lg font-bold border-t pt-2">
@@ -292,6 +292,7 @@
                         price: parseFloat(product.default_selling_price),
                         min_price: parseFloat(product.min_selling_price),
                         max_price: parseFloat(product.max_selling_price),
+                        tax_rate: parseFloat(product.tax_rate) || 0,
                         quantity: 1,
                         maxStock: product.quantity_in_stock
                     });
@@ -402,7 +403,14 @@
             }
             
             const subtotal = cart.reduce((sum, item) => sum + (item.quantity * item.price), 0);
-            const tax = subtotal * 0.16;
+            
+            // Calculate total tax based on each product's tax rate
+            const tax = cart.reduce((sum, item) => {
+                const itemSubtotal = item.quantity * item.price;
+                const itemTax = itemSubtotal * ((item.tax_rate || 0) / 100);
+                return sum + itemTax;
+            }, 0);
+            
             const total = subtotal + tax;
             const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             

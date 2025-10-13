@@ -58,12 +58,9 @@
                             </span>
                         @endif
 
-                        @php
-                            $stockStatus = $product->getStockStatus();
-                        @endphp
-                        @if($stockStatus === 'ok')
+                        @if($product->stock_status === 'ok')
                             <span class="badge badge-success">In Stock</span>
-                        @elseif($stockStatus === 'low')
+                        @elseif($product->stock_status === 'low')
                             <span class="badge badge-warning">Low Stock</span>
                         @else
                             <span class="badge bg-red-100 text-red-800">Out of Stock</span>
