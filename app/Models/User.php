@@ -60,6 +60,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the orders made by this user
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
      * Role checking methods
      */
     public function isSuperAdmin(): bool
