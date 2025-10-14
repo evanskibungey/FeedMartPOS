@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PurchaseOrderController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\POS\POSDashboardController;
 use App\Http\Controllers\POS\POSLoginController;
 use App\Http\Controllers\POS\SaleController;
@@ -122,6 +123,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/adjust', [InventoryController::class, 'adjustStock'])->name('adjust');
             Route::post('/adjust', [InventoryController::class, 'processAdjustment'])->name('adjust.store');
         });
+
+        // Customer Management Routes
+        Route::resource('customers', CustomerController::class);
+        Route::post('customers/{customer}/toggle-status', [CustomerController::class, 'toggleStatus'])
+            ->name('customers.toggle-status');
+        Route::post('customers/{customer}/update-password', [CustomerController::class, 'updatePassword'])
+            ->name('customers.update-password');
 
         // Settings Routes
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
