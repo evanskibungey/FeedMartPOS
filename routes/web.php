@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PurchaseOrderController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\OrderManagementController;
 use App\Http\Controllers\POS\POSDashboardController;
 use App\Http\Controllers\POS\POSLoginController;
 use App\Http\Controllers\POS\SaleController;
@@ -130,6 +131,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->name('customers.toggle-status');
         Route::post('customers/{customer}/update-password', [CustomerController::class, 'updatePassword'])
             ->name('customers.update-password');
+
+        // Order Management Routes
+        Route::prefix('orders')->name('orders.')->group(function () {
+            Route::get('/', [OrderManagementController::class, 'index'])->name('index');
+            Route::get('/customer-order/{id}', [OrderManagementController::class, 'showOrder'])->name('show-order');
+            Route::get('/pos-sale/{id}', [OrderManagementController::class, 'showSale'])->name('show-sale');
+            Route::post('/customer-order/{id}/update-status', [OrderManagementController::class, 'updateStatus'])->name('update-status');
+            Route::get('/customer-order/{id}/print', [OrderManagementController::class, 'printOrder'])->name('print-order');
+            Route::get('/pos-sale/{id}/print', [OrderManagementController::class, 'printSale'])->name('print-sale');
+        });
 
         // Settings Routes
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');

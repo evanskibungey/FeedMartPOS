@@ -239,8 +239,11 @@
             </div>
 
             <!-- Orders -->
-            <a href="#" 
-               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200 text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700">
+            <a href="{{ route('admin.orders.index') }}" 
+               class="group flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('admin.orders.*') 
+                          ? 'bg-gradient-harvest text-white shadow-harvest scale-105' 
+                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-harvest-50 hover:to-agri-50 hover:text-harvest-700' }}">
                 <div class="flex-shrink-0">
                     <svg class="w-6 h-6 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -249,9 +252,6 @@
                 <span x-show="!sidebarCollapsed" 
                       x-transition
                       class="font-semibold whitespace-nowrap">Orders</span>
-                <span x-show="!sidebarCollapsed" 
-                      x-transition
-                      class="ml-auto px-1.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-700 rounded">Soon</span>
             </a>
 
             <!-- Customers -->
