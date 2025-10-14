@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderManagementController;
+use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\POS\POSDashboardController;
 use App\Http\Controllers\POS\POSLoginController;
 use App\Http\Controllers\POS\SaleController;
@@ -140,6 +141,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/customer-order/{id}/update-status', [OrderManagementController::class, 'updateStatus'])->name('update-status');
             Route::get('/customer-order/{id}/print', [OrderManagementController::class, 'printOrder'])->name('print-order');
             Route::get('/pos-sale/{id}/print', [OrderManagementController::class, 'printSale'])->name('print-sale');
+        });
+
+        // Reports Routes
+        Route::prefix('reports')->name('reports.')->group(function () {
+            Route::get('/', [ReportsController::class, 'index'])->name('index');
+            Route::get('/sales', [ReportsController::class, 'sales'])->name('sales');
+            Route::get('/inventory', [ReportsController::class, 'inventory'])->name('inventory');
+            Route::get('/financial', [ReportsController::class, 'financial'])->name('financial');
+            
+            // Export Routes
+            Route::get('/sales/export', [ReportsController::class, 'exportSales'])->name('sales.export');
+            Route::get('/inventory/export', [ReportsController::class, 'exportInventory'])->name('inventory.export');
+            Route::get('/financial/export', [ReportsController::class, 'exportFinancial'])->name('financial.export');
         });
 
         // Settings Routes
