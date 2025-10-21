@@ -16,14 +16,29 @@
     </head>
     <body class="font-sans antialiased bg-gradient-to-br from-agri-50 via-white to-harvest-50">
         <div x-data="{ 
-            sidebarOpen: window.innerWidth >= 1024, 
+            sidebarOpen: false, 
             sidebarCollapsed: false,
+            isMobile() {
+                return window.innerWidth < 1024;
+            },
             init() {
+                // Set initial state based on screen size
+                this.sidebarOpen = window.innerWidth >= 1024;
+                
                 // Handle responsive behavior
-                window.addEventListener('resize', () => {
+                const handleResize = () => {
                     if (window.innerWidth >= 1024) {
                         this.sidebarOpen = true;
+                    } else {
+                        this.sidebarOpen = false;
                     }
+                };
+                
+                window.addEventListener('resize', handleResize);
+                
+                // Cleanup
+                this.$el.addEventListener('alpine:destroy', () => {
+                    window.removeEventListener('resize', handleResize);
                 });
             }
         }" class="min-h-screen">
@@ -90,7 +105,8 @@
         </div>
 
         <!-- Mobile Sidebar Overlay -->
-        <div x-show="sidebarOpen && window.innerWidth < 1024" 
+        <div x-show="sidebarOpen && isMobile()" 
+             x-cloak
              x-transition:enter="transition-opacity ease-linear duration-300"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
@@ -98,7 +114,8 @@
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
              @click="sidebarOpen = false"
-             class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40 lg:hidden">
+             style="z-index: 45;"
+             class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm lg:hidden">
         </div>
     </body>
 </html>

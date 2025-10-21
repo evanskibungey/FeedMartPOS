@@ -1,7 +1,7 @@
 <!-- Top Navigation Bar -->
-<header class="bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm sticky top-0 z-40">
-    <div class="px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+<header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
+    <div class="px-3 sm:px-4 lg:px-8">
+        <div class="flex items-center justify-between h-14 sm:h-16">
             <!-- Left Section: Menu Toggle & Breadcrumb -->
             <div class="flex items-center space-x-4">
                 <!-- Mobile Menu Toggle -->
