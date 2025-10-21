@@ -18,8 +18,13 @@ class PurchaseOrderController extends Controller
      */
     public function index(Request $request)
     {
-        $query = PurchaseOrder::with(['supplier', 'creator'])
-            ->withCount('items'); // Added items count
+        $query = PurchaseOrder::select(
+            'id', 'supplier_id', 'order_number', 'order_date', 
+            'expected_date', 'status', 'total_amount', 'created_by', 'created_at'
+        )->with([
+            'supplier:id,name,phone',
+            'creator:id,name'
+        ])->withCount('items');
 
         // Filter by status
         if ($request->filled('status')) {
@@ -37,7 +42,11 @@ class PurchaseOrderController extends Controller
         }
 
         $purchaseOrders = $query->latest()->paginate(15);
-        $suppliers = Supplier::active()->get();
+        
+        // Cache suppliers dropdown
+        $suppliers = cache()->remember('active_suppliers', 1800, function() {
+            return Supplier::select('id', 'name')->active()->get();
+        });
 
         return view('admin.purchase-orders.index', compact('purchaseOrders', 'suppliers'));
     }

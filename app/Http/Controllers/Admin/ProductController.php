@@ -17,7 +17,14 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Product::with(['category', 'brand']);
+        $query = Product::select(
+            'id', 'name', 'sku', 'category_id', 'brand_id', 
+            'price', 'quantity_in_stock', 'reorder_level', 
+            'status', 'image'
+        )->with([
+            'category:id,name', 
+            'brand:id,name'
+        ]);
 
         // Filter by category
         if ($request->filled('category')) {
@@ -57,8 +64,15 @@ class ProductController extends Controller
         }
 
         $products = $query->latest()->paginate(15);
-        $categories = Category::active()->get();
-        $brands = Brand::active()->get();
+        
+        // Cache dropdown data for 30 minutes
+        $categories = cache()->remember('active_categories', 1800, function() {
+            return Category::select('id', 'name')->active()->get();
+        });
+        
+        $brands = cache()->remember('active_brands', 1800, function() {
+            return Brand::select('id', 'name')->active()->get();
+        });
 
         return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
