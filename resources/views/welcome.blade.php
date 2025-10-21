@@ -10,7 +10,7 @@ $cartCount = $data['cartCount'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'FeedMart') }} - Quality Agriculture & Animal Feed Solutions</title>
+    <title>{{ config('app.name', '  TJ&J FEEDS') }} - Quality Agriculture & Animal Feed Solutions</title>
     <meta name="description" content="Your trusted partner in agriculture. Premium quality animal feed, farm supplies, and agricultural products delivered with care.">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&display=swap" rel="stylesheet" />
@@ -40,7 +40,7 @@ $cartCount = $data['cartCount'];
                 <div class="flex items-center space-x-3">
                     <x-application-logo class="h-12 w-12" />
                     <div>
-                        <h1 class="text-2xl font-bold gradient-text">FeedMart</h1>
+                        <h1 class="text-2xl font-bold gradient-text">TJ&J FEEDS</h1>
                         <p class="text-xs text-gray-500">Agriculture Excellence</p>
                     </div>
                 </div>
@@ -123,7 +123,7 @@ $cartCount = $data['cartCount'];
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose <span class="gradient-text">FeedMart</span>?</h2>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose <span class="gradient-text">TJ&J FEEDS</span>?</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">We're committed to providing the best products and services for your agricultural needs</p>
             </div>
 
@@ -233,11 +233,11 @@ $cartCount = $data['cartCount'];
             <div class="text-center">
                 <div class="flex items-center justify-center space-x-3 mb-4">
                     <x-application-logo class="h-10 w-10" />
-                    <h3 class="text-xl font-bold text-white">FeedMart</h3>
+                    <h3 class="text-xl font-bold text-white">TJ&J FEEDS</h3>
                 </div>
                 <p class="text-gray-400 mb-8">Your trusted partner for quality agricultural products and animal feed.</p>
                 <div class="border-t border-gray-800 pt-8">
-                    <p class="text-gray-400 text-sm">&copy; {{ date('Y') }} FeedMart. All rights reserved.</p>
+                    <p class="text-gray-400 text-sm">&copy; {{ date('Y') }} TJ&J FEEDS. All rights reserved.</p>
                 </div>
             </div>
         </div>
