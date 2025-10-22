@@ -11,38 +11,13 @@ class BrandSeeder extends Seeder
     {
         $brands = [
             [
-                'name' => 'Unga Farm Care',
-                'description' => 'Premium animal feed products from Unga Limited',
+                'name' => 'Twingalick',
+                'description' => 'Premium dairy feed brand for optimal milk production',
                 'is_active' => true,
             ],
             [
-                'name' => 'Pembe',
-                'description' => 'Quality livestock feed brand',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Kenchic',
-                'description' => 'Specialized poultry feeds',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Gold Crown',
-                'description' => 'Premium dairy and livestock feeds',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Farmers Choice',
-                'description' => 'Affordable quality feeds for farmers',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Nutri Plus',
-                'description' => 'Nutritional supplements and vitamins',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Agri-Best',
-                'description' => 'Agricultural feed solutions',
+                'name' => 'Generic',
+                'description' => 'Quality raw materials and ingredients',
                 'is_active' => true,
             ],
         ];

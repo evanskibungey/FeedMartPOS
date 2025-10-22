@@ -66,11 +66,11 @@ class OrderManagementController extends Controller
         // Get results
         $orders = (!$request->filled('status') || $request->status !== 'walk_in') 
             ? $ordersQuery->paginate(20) 
-            : collect()->paginate(20);
+            : new \Illuminate\Pagination\LengthAwarePaginator([], 0, 20);
         
         $sales = (!$request->filled('status') || $request->status === 'walk_in')
             ? $salesQuery->paginate(20)
-            : collect()->paginate(20);
+            : new \Illuminate\Pagination\LengthAwarePaginator([], 0, 20);
 
         // Calculate statistics
         $stats = $this->calculateStats();

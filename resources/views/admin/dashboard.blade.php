@@ -45,7 +45,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 animate-slide-in-right">
                 
                 <!-- Total Revenue -->
-                <div class="stat-card stat-card-harvest group cursor-pointer hover:scale-105 transition-transform duration-300 p-4 sm:p-6">
+                <a href="{{ route('admin.reports.financial') }}" class="block">
+                    <div class="stat-card stat-card-harvest group cursor-pointer hover:scale-105 transition-transform duration-300 p-4 sm:p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                         <div class="min-w-0 flex-1">
                             <p class="text-gray-600 text-xs sm:text-sm font-medium mb-1">Total Revenue</p>
@@ -64,8 +65,10 @@
                         </div>
                     </div>
                 </div>
+                </a>
 
                 <!-- Total Transactions -->
+                <a href="{{ route('admin.orders.index') }}" class="block">
                 <div class="stat-card stat-card-agri group cursor-pointer hover:scale-105 transition-transform duration-300 p-4 sm:p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                         <div class="min-w-0 flex-1">
@@ -82,8 +85,10 @@
                         </div>
                     </div>
                 </div>
+                </a>
 
                 <!-- Total Products -->
+                <a href="{{ route('admin.products.index') }}" class="block">
                 <div class="stat-card stat-card-sky group cursor-pointer hover:scale-105 transition-transform duration-300 p-4 sm:p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                         <div class="min-w-0 flex-1">
@@ -100,8 +105,10 @@
                         </div>
                     </div>
                 </div>
+                </a>
 
                 <!-- Pending Orders -->
+                <a href="{{ route('admin.orders.index') }}?status=pending" class="block">
                 <div class="stat-card group cursor-pointer hover:scale-105 transition-transform duration-300 p-4 sm:p-6 {{ $orderStats['pending_orders'] > 0 ? 'border-l-4 border-yellow-500' : '' }}">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                         <div class="min-w-0 flex-1">
@@ -118,6 +125,7 @@
                         </div>
                     </div>
                 </div>
+                </a>
             </div>
 
             <!-- Quick Actions -->
