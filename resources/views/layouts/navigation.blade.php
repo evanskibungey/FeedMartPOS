@@ -8,8 +8,8 @@
                     <a href="{{ route('home') }}" class="flex items-center space-x-3 transition-transform duration-300 hover:scale-105">
                         <x-application-logo class="block h-12 w-12 transition-transform duration-300 group-hover:rotate-12" />
                         <div class="hidden md:block">
-                            <span class="text-2xl font-bold text-gradient-agri">FeedMart</span>
-                            <p class="text-xs text-gray-600 -mt-1">Agriculture & Feed</p>
+                            <span class="text-2xl font-bold text-gradient-agri">{{ \App\Models\Setting::systemName() }}</span>
+                            <p class="text-xs text-gray-600 -mt-1">{{ \App\Models\Setting::tagline() }}</p>
                         </div>
                     </a>
                 </div>

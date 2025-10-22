@@ -119,7 +119,7 @@
                             <!-- Price -->
                             <div class="mb-6 pb-6 border-b border-gray-200">
                                 <div class="flex items-baseline space-x-3">
-                                    <span class="text-4xl font-bold text-agri-600">KES {{ number_format($product->price, 2) }}</span>
+                                    <span class="text-4xl font-bold text-agri-600">{{ \App\Models\Setting::formatCurrency($product->price) }}</span>
                                     @if($product->unit)
                                         <span class="text-gray-500">per {{ $product->unit }}</span>
                                     @endif
@@ -282,7 +282,7 @@
                                     <!-- Price & Action -->
                                     <div class="flex items-center justify-between pt-3 border-t border-gray-200">
                                         <p class="text-lg font-bold text-agri-600">
-                                            KES {{ number_format($relatedProduct->price, 2) }}
+                                            {{ \App\Models\Setting::formatCurrency($relatedProduct->price) }}
                                         </p>
                                         <a href="{{ route('shop.show', $relatedProduct->id) }}" 
                                            class="p-2 rounded-lg border-2 border-agri-200 text-agri-600 hover:bg-agri-50 transition-colors">

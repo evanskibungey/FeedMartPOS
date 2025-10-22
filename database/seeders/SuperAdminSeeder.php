@@ -28,9 +28,9 @@ class SuperAdminSeeder extends Seeder
             ]);
 
             $this->command->info('Super Admin created successfully!');
-            $this->command->info('Email: admin@feedmart.com');
+            $this->command->info('Email: tjjandj.co.ke');
             $this->command->info('Phone: +254700000000');
-            $this->command->info('Password: Admin@123');
+            $this->command->info('Password: Admin@1234Tj');
             $this->command->warn('Please change the password after first login!');
         } else {
             $this->command->info('Super Admin already exists.');

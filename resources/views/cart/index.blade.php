@@ -1,17 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div>
-                <h2 class="font-bold text-3xl text-gray-800 leading-tight">
-                    {{ __('Shopping Cart') }}
-                </h2>
-                <p class="text-sm text-gray-600 mt-1">Review your items before checkout</p>
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="h-16 w-1 bg-gradient-agri rounded-full"></div>
+                <div>
+                    <h2 class="font-bold text-4xl text-gray-900 leading-tight bg-gradient-to-r from-agri-600 to-harvest-600 bg-clip-text text-transparent">
+                        {{ __('Shopping Cart') }}
+                    </h2>
+                    <p class="text-sm text-gray-600 mt-1 flex items-center">
+                        <svg class="w-4 h-4 mr-1.5 text-agri-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Review your items before checkout
+                    </p>
+                </div>
             </div>
-            <a href="{{ route('shop.index') }}" class="btn-earth">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Continue Shopping
+            <!-- Continue Shopping Button - Far Right -->
+            <a href="{{ route('shop.index') }}" class="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-earth-500 to-earth-600 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-r from-earth-400 to-earth-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="relative flex items-center space-x-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    <span class="text-lg">Continue Shopping</span>
+                </div>
             </a>
         </div>
     </x-slot>
@@ -121,8 +133,8 @@
 
                                                 <!-- Price Info -->
                                                 <div class="text-right">
-                                                    <p class="text-sm text-gray-600">Unit Price: KES {{ number_format($item['unit_price'], 2) }}</p>
-                                                    <p class="text-xl font-bold text-agri-600">KES {{ number_format($item['total'], 2) }}</p>
+                                                    <p class="text-sm text-gray-600">Unit Price: {{ \App\Models\Setting::formatCurrency($item['unit_price']) }}</p>
+                                                    <p class="text-xl font-bold text-agri-600">{{ \App\Models\Setting::formatCurrency($item['total']) }}</p>
                                                     @if($item['tax_rate'] > 0)
                                                         <p class="text-xs text-gray-500">Incl. Tax ({{ $item['tax_rate'] }}%)</p>
                                                     @endif
@@ -170,20 +182,20 @@
                                 <div class="space-y-3">
                                     <div class="flex justify-between text-gray-700">
                                         <span>Items ({{ $cartCount }})</span>
-                                        <span class="font-semibold">KES {{ number_format($subtotal, 2) }}</span>
+                                        <span class="font-semibold">{{ \App\Models\Setting::formatCurrency($subtotal) }}</span>
                                     </div>
                                     
                                     @if($tax > 0)
                                         <div class="flex justify-between text-gray-700">
                                             <span>Tax</span>
-                                            <span class="font-semibold">KES {{ number_format($tax, 2) }}</span>
+                                            <span class="font-semibold">{{ \App\Models\Setting::formatCurrency($tax) }}</span>
                                         </div>
                                     @endif
                                     
                                     <div class="border-t border-gray-300 pt-3">
                                         <div class="flex justify-between items-center">
                                             <span class="text-lg font-bold text-gray-900">Total</span>
-                                            <span class="text-2xl font-bold text-agri-600">KES {{ number_format($total, 2) }}</span>
+                                            <span class="text-2xl font-bold text-agri-600">{{ \App\Models\Setting::formatCurrency($total) }}</span>
                                         </div>
                                     </div>
                                 </div>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TJ&J FEEDS') }}</title>
+        <title>{{ \App\Models\Setting::systemName() }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -26,14 +26,14 @@
                     <div class="flex items-center space-x-3 mb-8">
                         <x-application-logo class="w-16 h-16" />
                         <div>
-                            <h1 class="text-3xl font-bold text-white">FeedMart</h1>
-                            <p class="text-agri-100 text-sm">Point of Sale System</p>
+                            <h1 class="text-3xl font-bold text-white">{{ \App\Models\Setting::systemName() }}</h1>
+                            <p class="text-agri-100 text-sm">{{ \App\Models\Setting::tagline() }}</p>
                         </div>
                     </div>
                     
                     <div class="space-y-6 text-white">
                         <h2 class="text-4xl font-bold leading-tight">
-                            Agriculture & Animal<br/>Feed Solutions
+                            {{ \App\Models\Setting::tagline() }}
                         </h2>
                         <p class="text-lg text-agri-100">
                             Streamline your agricultural business with our modern POS system designed specifically for feed marts and agricultural supply stores.
@@ -77,8 +77,8 @@
                     <div class="flex flex-col items-center space-y-2">
                         <x-application-logo class="w-20 h-20" />
                         <div class="text-center">
-                            <h1 class="text-2xl font-bold text-gradient-agri">FeedMart</h1>
-                            <p class="text-sm text-gray-600">Point of Sale System</p>
+                            <h1 class="text-2xl font-bold text-gradient-agri">{{ \App\Models\Setting::systemName() }}</h1>
+                            <p class="text-sm text-gray-600">{{ \App\Models\Setting::tagline() }}</p>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
 
                     <!-- Footer Text -->
                     <div class="mt-6 text-center text-sm text-gray-600">
-                        <p>&copy; {{ date('Y') }} FeedMart. All rights reserved.</p>
+                        <p>&copy; {{ date('Y') }} {{ \App\Models\Setting::systemName() }}. All rights reserved.</p>
                     </div>
                 </div>
             </div>

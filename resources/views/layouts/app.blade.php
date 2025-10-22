@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TJ$J FEEDS') }}</title>
+        <title>{{ \App\Models\Setting::systemName() }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -36,22 +36,7 @@
             </main>
 
             <!-- Footer -->
-            <footer class="bg-white/50 backdrop-blur-sm border-t border-gray-200 mt-12">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                        <div class="flex items-center space-x-3">
-                            <x-application-logo class="h-10 w-10" />
-                            <div>
-                                <p class="text-sm font-semibold text-gray-700">{{ config('app.name', 'FeedMart POS') }}</p>
-                                <p class="text-xs text-gray-500">Agriculture & Animal Feed Solutions</p>
-                            </div>
-                        </div>
-                        <div class="text-sm text-gray-600">
-                            <p>&copy; {{ date('Y') }} FeedMart. All rights reserved.</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <x-customer-footer />
         </div>
     </body>
 </html>
